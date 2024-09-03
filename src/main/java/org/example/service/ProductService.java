@@ -53,7 +53,7 @@ public class ProductService {
             String originalFileName = image.getOriginalFilename();
             String fullFileName = UUID.randomUUID().toString()+originalFileName.substring(originalFileName.lastIndexOf("."));
 
-            String directory = "/app/uploads/";
+            String directory = "src/main/resources/static/image";
             Path imagePath = Paths.get(directory, fullFileName);
 
             try (InputStream inputStream = image.getInputStream()) {
@@ -73,7 +73,7 @@ public class ProductService {
         {
             String imageName = product.get().getImageName();
             if(imageName != null){
-                String directory = "/app/uploads/" ;
+                String directory ="src/main/resources/static/image" ;
                 Path imagePath = Paths.get(directory, imageName);
                 try {
                     Files.delete(imagePath);
@@ -94,7 +94,7 @@ public class ProductService {
     public void updateProduct(Product product,MultipartFile image,Product existingProduct){
 
         String previousImage = existingProduct.getImageName();
-        String directory = "/app/uploads/" ;
+        String directory = "src/main/resources/static/image";
         Path imagePath = Paths.get(directory, previousImage);
         try {
             Files.delete(imagePath);
