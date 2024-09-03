@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Products</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #808080;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0 auto;
+        }
+        .slika_loga {
+            max-height: 50px;
+        }
+        footer {
+            position:fixed;
+
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background-color: #808080;
+            padding: 10px;
+            color: #fff;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+
+        .tablicaUfooteru {
+            width: 500px;
+
+            border-collapse: collapse;
+            margin: 0 auto;
+            vertical-align: middle;
+        }
+        .tablicaUfooteru tr td
+        {
+            text-align: center;
+        }
+        .sticker
+        {
+            padding-left: 62px;
+        }
+        .footerparagraf
+        {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <img class="slika_loga" src="/image/logo.png" alt="Logo">
+    <h1>All brand Products</h1>
+</header>
+<div class="container">
+
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Brand</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.brand.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <div>
+        <table class="tablicaUfooteru">
+            <tr>
+                <th class="sticker"><img src="/image/free-shipping%20(2).png" alt="Free Delivery" style="margin-right: 10px;"></th>
+                <th class="sticker"><img src="/image/shipping.png" alt="Fast Delivery" style="margin-right: 10px;"></th>
+                <th class="sticker"><img src="/image/hours.png" alt="Worldwide Delivery"></th>
+            </tr>
+            <tr>
+                <td>Free shipping</td>
+                <td>24h shipping</td>
+                <td>International</td>
+            </tr>
+
+        </table>
+    </div>
+    <p class="footerparagraf">© 2024 Mobile Shop. All rights reserved.</p>
+</footer>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

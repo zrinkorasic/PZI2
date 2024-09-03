@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration response</title>
+</head>
+<body>
+<div th:if="${registrationMessage eq 'Registration successful'}">
+    <p style="color: green;">Registration successful!</p>
+</div>
+<div th:if="${registrationMessage ne 'User already exists'}">
+    <p style="color: red;"> User already exists</p>
+</div>
+
+<form th:action="@{/auth/register}" method="POST" th:object="${user}">
+
+    <div th:if="${firstNameError}" class="invalid-feedback" th:text="${firstNameError}"></div>
+    <div th:if="${lastNameError}" class="invalid-feedback" th:text="${lastNameError}"></div>
+    <div th:if="${emailError}" class="invalid-feedback" th:text="${emailError}"></div>
+    <div th:if="${passwordError}" class="invalid-feedback" th:text="${passwordError}"></div>
+
+    <input type="submit" value="Register">
+</form>
+
+</body>
+</html>

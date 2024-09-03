@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All brands</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Optional custom styles */
+        .btn-margin {
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
+            margin: 0;
+            padding: 0;
+
+        }
+
+        header {
+            background-color: #808080;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 5px; /* Adjust the margin between links */
+            padding: 5px; /* Adjust the padding around links */
+            color:grey;
+        }
+
+
+
+        .navbar-nav > li > a {
+            padding: 5px 10px !important; /* Adjust padding for Bootstrap navbar */
+        }
+
+        h1 {
+            margin-left:200px; /* Center the h1 horizontally */
+        }
+        .slika_loga {
+            max-height: 50px; /* Adjust the maximum height of the logo */
+        }
+        footer {
+
+
+            background-color: #808080;
+            padding: 10px;
+            color: #fff;
+            text-align: left;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+
+
+        .tablicaUfooteru {
+            width: 500px;
+
+            border-collapse: collapse;
+            margin: 0 auto;
+            vertical-align: middle;
+        }
+        .tablicaUfooteru tr td
+        {
+            text-align: center;
+        }
+        .sticker
+        {
+            padding-left: 62px;
+        }
+        .footerparagraf
+        {
+            text-align: center;
+        }
+
+        .text-grey {
+            color: grey !important;
+
+        }
+        .textdecorationnone
+        {
+            color: grey; /* or any other color you prefer */
+
+        }
+        .textdecorationnone:hover {
+            color: grey; /* Change color on hover if desired */
+            text-decoration: none;
+        }
+
+        .btn-grey{
+            background-color: grey;
+            color:white;
+            border-color: grey;
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+<header>
+    <img class="slika_loga" src="/image/logo.png" alt="Logo">
+    <h1>All brands</h1>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div th:if="${currentUser}" class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin cp
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/allProducts}">All Products</a>
+                        <a class="dropdown-item" th:href="@{/private/allBrands}">All Brands</a>
+                        <a class="dropdown-item" th:href="@{/private/allOrders}">All Orders</a>
+                        <a class="dropdown-item" th:href="@{/private/users}">All Users</a>
+
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Table row with link and button -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <table>
+                        <tr>
+                            <td><a class="textdecorationnone" th:href="@{/cartList}">Cart</a></td>
+
+                            <td>
+                                <form th:action="@{/logout}" method="post">
+                                    <button type="submit" class="btn btn-white text-grey" >Log out</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+</header>
+
+<div class="container">
+
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through brands -->
+        <tr th:each="brand : ${brands}">
+            <td th:text="${brand.name}"></td>
+            <td>
+                <form th:if="${currentUser}" th:action="@{/private/deleteBrand/{id}(id=${brand.id})}" method="post">
+                    <button class="btn btn-grey btn-sm btn-margin" type="submit">Delete</button>
+                </form>
+
+                <form th:if="${currentUser}" th:action="@{/private/updateBrand/{id}(id=${brand.id})}" method="post">
+                    <button class="btn btn-grey btn-sm btn-margin" type="submit">Update</button>
+                </form>
+
+                <form th:action="@{/brandProduct/{id}(id=${brand.id})}" method="get">
+                    <button class="btn btn-grey btn-sm" type="submit">View Brand Products</button>
+                </form>
+            </td>
+        </tr>
+        <!-- End Loop -->
+        </tbody>
+    </table>
+
+    <a th:if="${currentUser}" th:href="@{/private/createBrand}" class="btn btn-grey btn-margin">Add new Brand</a>
+</div>
+
+<footer>
+    <div>
+        <table class="tablicaUfooteru">
+            <tr>
+                <th class="sticker"><img src="/image/free-shipping%20(2).png" alt="Free Delivery" style="margin-right: 10px;"></th>
+                <th class="sticker"><img src="/image/shipping.png" alt="Fast Delivery" style="margin-right: 10px;"></th>
+                <th class="sticker"><img src="/image/hours.png" alt="Worldwide Delivery"></th>
+            </tr>
+            <tr>
+                <td>Free shipping</td>
+                <td>24h shipping</td>
+                <td>International</td>
+            </tr>
+
+        </table>
+    </div>
+    <p class="footerparagraf">© 2024 Mobile Shop. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Brand</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Add New Brand</h2>
+    <form th:action="@{/private/createBrand}" method="POST" th:object="${brand}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" class="form-control" th:errorClass="is-invalid">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Brand</button>
+        <a th:href="@{/private/allBrands}" class="btn btn-secondary">All Brands</a>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

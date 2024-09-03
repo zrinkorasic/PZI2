@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista Korisnika</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style> body {
+        margin-bottom: 60px; /* Adjust the margin to accommodate the footer's height */
+    }
+
+    header {
+        background-color: #808080;
+        padding: 10px;
+        color: #fff;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    nav {
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        margin-right: 5px; /* Adjust the margin between links */
+        padding: 5px; /* Adjust the padding around links */
+        color:grey;
+    }
+
+
+
+    .navbar-nav > li > a {
+        padding: 5px 10px !important; /* Adjust padding for Bootstrap navbar */
+    }
+
+    .slika_loga {
+        max-height: 50px; /* Adjust the maximum height of the logo */
+    }
+
+    h1 {
+        margin: 0; /* Remove any default margin */
+        text-align: center;
+        margin-left:160px;
+    }
+
+    .text-grey {
+        color: grey !important;
+    }
+
+    .textdecorationnone
+    {
+        color: grey; /* or any other color you prefer */
+
+    }
+    .textdecorationnone:hover {
+        color: grey; /* Change color on hover if desired */
+        text-decoration: none;
+    }
+    .btn-grey
+    {
+        background-color: grey;
+        border-color: grey;
+        color: #fff;
+    }
+
+
+    </style>
+
+</head>
+<body>
+
+<header>
+    <img class="slika_loga" src="/image/logo.png" alt="Logo">
+    <h1>Mobile Shop</h1>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Admin cp
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/allProducts}">All Products</a>
+                    <a class="dropdown-item" th:href="@{/private/allBrands}">All Brands</a>
+                    <a class="dropdown-item" th:href="@{/private/allOrders}">All Orders</a>
+                    <a class="dropdown-item" th:href="@{/private/users}">All Users</a>
+
+                </div>
+            </li>
+        </ul>
+
+        <!-- Table row with link and button -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <table>
+                    <tr>
+                        <td>
+                            <a class="textdecorationnone" th:href="@{/cartList}">Cart</a>
+                        </td>
+                        <td>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-white text-grey">Log out</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<div class="container mt-5">
+    <h2>Lista Korisnika</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/private/user" class="btn btn-grey">Add new User</a>
+
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.firstName}">First Name</td>
+            <td th:text="${user.lastName}">Last Name</td>
+            <td th:text="${user.email}">Email</td>
+            <td>
+                <span th:each="role : ${user.roles}" class="badge badge-primary mr-1" th:text="${role}"></span>
+            </td>
+            <td>
+                <div>
+                    <form th:action="@{/private/users/delete/{userId}(userId=${user.id})}" method="post" class="d-inline">
+                        <button type="button" class="btn btn-grey delete-user-btn">Delete</button>
+                    </form>
+                    <a th:href="@{/private/users/edit/{userId}(userId=${user.id})}" class="btn btn-grey d-inline-block">Edit</a>
+                </div>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.delete-user-btn').on('click', function () {
+            Swal.fire({
+                title: 'Jeste li sigurni?',
+                text: 'Ova radnja je nepovratna!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Da, obriši!',
+                cancelButtonText: 'Odustani'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).closest('form').submit();
+                }
+            });
+        });
+    });
+</script>
+
+
+</html>

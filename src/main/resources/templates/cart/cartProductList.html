@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #808080;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0 auto; /* Center the h1 horizontally */
+        }
+        .slika_loga {
+            max-height: 50px; /* Adjust the maximum height of the logo */
+        }
+
+        .btn-grey {
+            background-color: #808080;
+            color: #fff;
+        }
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+<header>
+    <img class="slika_loga" src="/image/logo.png" alt="Logo">
+    <h1>Cart</h1>
+</header>
+
+<div class="container mt-5">
+    <h2>Cart Items</h2>
+
+    <div class="row">
+        <div th:each="cart : ${carts}" class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <img  th:src="${'/uploads/' + cart.product.imageName}" class="card-img-top" alt="Product Image">
+                    <h5 class="card-title" th:text="${cart.product.name}"></h5>
+                    <p class="card-text">Quantity: <span th:text="${cart.quantity}"></span></p>
+                    <p class="card-text">Price: $<span th:text="${cart.price}"></span></p>
+                    <form th:action="@{/deleteCart/{id}(id=${cart.id})}" method="post">
+                        <button type="submit" class="btn btn-grey">Remove product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a  th:href="@{/allProducts}" class="btn btn-grey mt-3">Products List</a>
+    <a  th:href="@{/checkoutItems}" class="btn btn-grey mt-3">Checkout Items</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista Ordera</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style> .btn-margin {
+        margin-right: 5px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
+    }
+
+    header {
+        background-color: #808080;
+        padding: 10px;
+        color: #fff;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    nav {
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+    nav a {
+
+        text-decoration: none;
+        margin-right: 5px; /* Adjust the margin between links */
+        padding: 5px; /* Adjust the padding around links */
+        color:grey;
+    }
+
+
+
+    .navbar-nav > li > a {
+        padding: 5px 10px !important; /* Adjust padding for Bootstrap navbar */
+    }
+
+    h1 {
+        margin-left: 200px; /* Center the h1 horizontally */
+    }
+    .slika_loga {
+        max-height: 50px; /* Adjust the maximum height of the logo */
+    }
+
+    footer {
+
+        background-color: #808080;
+        padding: 10px;
+        color: #fff;
+        text-align: left;
+        margin-top: auto; /* Push the footer to the bottom */
+    }
+
+
+    .tablicaUfooteru {
+        width: 500px;
+
+        border-collapse: collapse;
+        margin: 0 auto;
+        vertical-align: middle;
+    }
+    .tablicaUfooteru tr td
+    {
+        text-align: center;
+    }
+    .sticker
+    {
+        padding-left: 62px;
+    }
+    .footerparagraf
+    {
+        text-align: center;
+    }
+
+    .btn-grey {
+        background-color: grey;
+        border-color: grey;
+        color: #fff;
+    }
+    .btn-grey {
+        margin-right:10px;
+    }
+
+    .text-grey {
+        color: grey !important;
+    }
+    .textdecorationnone
+    {
+        color: grey; /* or any other color you prefer */
+
+    }
+    .textdecorationnone:hover {
+        color: grey; /* Change color on hover if desired */
+        text-decoration: none;
+    }
+
+    </style>
+</head>
+<body>
+
+
+<header>
+    <img class="slika_loga" src="/image/logo.png" alt="Logo">
+    <h1>All Orders</h1>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Admin cp
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/allProducts}">All Products</a>
+                    <a class="dropdown-item" th:href="@{/private/allBrands}">All Brands</a>
+                    <a class="dropdown-item" th:href="@{/private/allOrders}">All Orders</a>
+                    <a class="dropdown-item" th:href="@{/private/users}">All Users</a>
+
+                </div>
+            </li>
+        </ul>
+
+        <!-- Table row with link and button -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <table>
+                    <tr>
+                        <td>
+                            <a  class="textdecorationnone" th:href="@{/cartList}">Cart</a>
+                        </td>
+                        <td>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-white text-grey" >Log out</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+<div th:if="${deleteOrderError}" class="alert alert-danger" role="alert">
+    <p th:text="${deleteOrderError}"></p>
+</div>
+<div class="container mt-5">
+    <h2>Lista Ordera</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>adress</th>
+            <th>phone number</th>
+            <th>total price</th>
+            <th>user</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.address}">Adress</td>
+            <td th:text="${order.number}">Quantity</td>
+            <td th:text="${order.totalPrice}">Total Price</td>
+            <td th:text="${order.user.email}">email</td>
+            <td>
+                <div>
+                    <form th:action="@{/private/deleteOrder/{orderId}(orderId=${order.id})}" method="post" class="d-inline">
+                        <button type="button" class="btn btn-grey delete-order-btn">Delete</button>
+                    </form>
+
+                    <form th:action="@{/private/oderDetails/{orderId}(orderId=${order.id})}" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-grey d-inline-block">View Details</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <div>
+        <table class="tablicaUfooteru">
+            <tr>
+                <th class="sticker"><img src="/image/free-shipping%20(2).png" alt="Free Delivery" style="margin-right: 10px;"></th>
+                <th class="sticker"><img src="/image/shipping.png" alt="Fast Delivery" style="margin-right: 10px;"></th>
+                <th class="sticker"><img src="/image/hours.png" alt="Worldwide Delivery"></th>
+            </tr>
+            <tr>
+                <td>Free shipping</td>
+                <td>24h shipping</td>
+                <td>International</td>
+            </tr>
+
+        </table>
+    </div>
+    <p class="footerparagraf">© 2024 Mobile Shop. All rights reserved.</p>
+</footer>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.delete-order-btn').on('click', function () {
+            Swal.fire({
+                title: 'Jeste li sigurni?',
+                text: 'Ova radnja je nepovratna!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Da, obriši!',
+                cancelButtonText: 'Odustani'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).closest('form').submit();
+                }
+            });
+        });
+    });
+</script>
+
+</html>
