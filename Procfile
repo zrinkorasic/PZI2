@@ -1,1 +1,1 @@
-web: java -jar target/MobileShop.jar
+web: java -jar target/onlineshop-0.0.1-SNAPSHOT.jar
