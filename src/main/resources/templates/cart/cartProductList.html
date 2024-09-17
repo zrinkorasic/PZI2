@@ -55,7 +55,7 @@
         <div th:each="cart : ${carts}" class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <img th:src="@{'/images/' + ${cart.product.imageName}}" class="card-img-top" alt="Product Image">
+                    <img th:src="${'/uploads/' + cart.product.imageName}" class="card-img-top" alt="Product Image">
                     <h5 class="card-title" th:text="${cart.product.name}"></h5>
                     <p class="card-text">Quantity: <span th:text="${cart.quantity}"></span></p>
                     <p class="card-text">Price: $<span th:text="${cart.price}"></span></p>
