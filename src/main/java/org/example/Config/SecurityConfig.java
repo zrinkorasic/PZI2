@@ -47,13 +47,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/register/**","/auth/register").permitAll()
+                .requestMatchers("/auth/register/","/auth/register").permitAll()
                 .requestMatchers("/allProducts")
                 .permitAll()
-                .requestMatchers("/image/", "/css/", "/js/","/images/").permitAll()
-                .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/private/").hasAuthority("ADMIN")
+                .requestMatchers("/image/", "/css/", "/js/","/images/").permitAll()
+                .requestMatchers("/uploads/").permitAll()
+                .requestMatchers("/private/**").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
