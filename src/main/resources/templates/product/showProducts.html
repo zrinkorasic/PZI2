@@ -164,9 +164,10 @@
                                 <a  th:href="@{/cartList}">Cart</a>
                             </td>
                             <td>
-                                <form th:action="@{/logout}" method="post">
+                                <form th:if="${checkUser}" th:action="@{/logout}" method="post">
                                     <button type="submit" class="btn btn-white text-grey" >Log out</button>
                                 </form>
+                                <a th:if="${not checkUser}" th:href="@{/login}" class="btn btn-white text-grey">Log in</a>
                             </td>
                         </tr>
                     </table>

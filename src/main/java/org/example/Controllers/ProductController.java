@@ -72,9 +72,15 @@ public class ProductController {
 
         try{
             List<Product> products = this.productService.findAll(search);
-            User user = this.userService.findCurrentUser();
+            User user = this.userService.findCurrentUserForAllProducts();
             model.addAttribute("products",products);
-            model.addAttribute("currentUser",user.isAdmin());
+            if(user != null){
+                model.addAttribute("currentUser",user.isAdmin());
+                model.addAttribute("checkUser",true);
+            }else{
+                model.addAttribute("currentUser",false);
+                model.addAttribute("checkUser",false);
+            }
             model.addAttribute("brands",this.brandService.findAllBrands());
             return "product/showProducts";
         }catch(RuntimeException e){

@@ -47,8 +47,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/register/","/auth/register")
+                .requestMatchers("/auth/register/**","/auth/register").permitAll()
+                .requestMatchers("/allProducts")
                 .permitAll()
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/private/").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
@@ -61,7 +63,7 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/").permitAll();
+                .logoutSuccessUrl("/allProducts").permitAll();
 
         httpSecurity.authenticationProvider(authenticationProvider());
         httpSecurity.headers().frameOptions().sameOrigin();
